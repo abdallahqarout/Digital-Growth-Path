@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Stories — Digital Growth Path</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --surface2: #1a1e28;
+            --border: rgba(255,255,255,0.07);
+            --accent: #c8a96e;
+            --accent2: #7eb8d4;
+            --text: #e8e3d8;
+            --text-muted: #7a7e8a;
+            --card-glow: 0 0 40px rgba(200,169,110,0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav.topnav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13,15,20,0.85);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+        .dark-toggle {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+
+        .dark-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+        .hero {
+            position: relative;
+            padding: 100px 48px 80px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,169,110,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+
+        .hero h1 em { font-style: italic; color: var(--accent); }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1rem;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+
+        .toc-wrapper {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            padding: 0 48px;
+            animation: fadeUp 0.6s ease 0.3s both;
+        }
+
+        .toc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .toc-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .toc-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .toc-col {
+            padding: 24px 28px;
+        }
+
+        .toc-col:first-child {
+            border-right: 1px solid var(--border);
+        }
+
+        .toc-col-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .toc-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toc-col ul li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .toc-col ul li a:hover { color: var(--accent); }
+
+        .toc-col ul li a::before {
+            content: '↓';
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .section-divider {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 48px;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .section-label h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .story {
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            padding: 0 48px;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .story-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--border);
+            line-height: 1;
+            min-width: 56px;
+        }
+
+        .story-title-block h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .story-title-block .story-type {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .accent-red   { color: #e05d6a; }
+        .accent-orange{ color: #f0963a; }
+        .accent-green { color: #5db88a; }
+        .accent-grey  { color: #a0a8b8; }
+        .accent-coral { color: #e8784a; }
+        .accent-blue  { color: #5b9fd4; }
+
+        .story-video {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            display: block;
+            margin-bottom: 28px;
+            background: var(--surface);
+        }
+
+        .person-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            gap: 0;
+            margin-bottom: 32px;
+        }
+
+        .person-photo {
+            flex-shrink: 0;
+            width: 180px;
+        }
+
+        .person-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .person-info {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .info-cell {
+            padding: 20px 22px;
+            border-left: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-cell:nth-child(4),
+        .info-cell:nth-child(5),
+        .info-cell:nth-child(6) {
+            border-bottom: none;
+        }
+
+        .info-cell .label {
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .info-cell p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .story-body {
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 0.95rem;
+        }
+
+        .story-body p + p { margin-top: 1.2em; }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        body.light {
+            --bg: #f7f5f0;
+            --surface: #ffffff;
+            --surface2: #f0ece4;
+            --border: rgba(0,0,0,0.08);
+            --text: #1a1a1a;
+            --text-muted: #6b6b6b;
+            --card-glow: 0 4px 24px rgba(0,0,0,0.05);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            nav.topnav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .hero, .story, .toc-wrapper, .section-divider { padding-left: 20px; padding-right: 20px; }
+            .toc-body { grid-template-columns: 1fr; }
+            .toc-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+            .person-card { flex-direction: column; }
+            .person-photo { width: 100%; height: 220px; }
+            .person-info { grid-template-columns: 1fr 1fr; }
+            .info-cell:nth-child(4), .info-cell:nth-child(5) { border-bottom: 1px solid var(--border); }
+            footer { flex-direction: column; align-items: flex-start; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="topnav">
+    <a href="./Home Page.html" class="nav-brand">Digital Growth Path</a>
+    <ul class="nav-links">
+        <li><a href="./Learning Hub.html">Learning Hub</a></li>
+        <li><a href="./Success Stories.html" class="active">Success Stories</a></li>
+        <li><a href="./Self-Assessment - Growth Tools.html">Self-Assessment</a></li>
+        <li><a href="./About Us.html">About Us</a></li>
+        <li><a href="./Workshop - Events.html">Workshops</a></li>
+        <li><a href="./Contact Us.html">Contact</a></li>
+    </ul>
+    <button class="dark-toggle" onclick="toggleMode()">☀ Light Mode</button>
+</nav>
+
+<section class="hero">
+    <span class="hero-tag">Inspiration & Learning</span>
+    <h1>Success <em>Stories</em></h1>
+    <p>One way to learn — and get a boost of motivation — is to read about successful companies and figures. Here we take you through many journeys, from great companies to inspiring individuals, hoping you'll derive not only knowledge but also the courage to fulfill your own dream.</p>
+</section>
+
+<div class="toc-wrapper">
+    <div class="toc-card">
+        <div class="toc-header">Table of Contents</div>
+        <div class="toc-body">
+            <div class="toc-col">
+                <div class="toc-col-title">Business Stories</div>
+                <ul>
+                    <li><a href="#Net">Netflix</a></li>
+                    <li><a href="#Ama">Amazon</a></li>
+                    <li><a href="#Nvidia">Nvidia</a></li>
+                </ul>
+            </div>
+            <div class="toc-col">
+                <div class="toc-col-title">People Stories</div>
+                <ul>
+                    <li><a href="#steve">Steve Jobs</a></li>
+                    <li><a href="#Amjad">Amjad Masad</a></li>
+                    <li><a href="#kojima">Hideo Kojima</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-divider">
+    <div class="section-label"><h2>Business Stories</h2></div>
+</div>
+
+<div class="story" id="Net">
+    <div class="story-header">
+        <div class="story-number">01</div>
+        <div class="story-title-block">
+            <h3 class="accent-red">Netflix</h3>
+            <div class="story-type">Founded 1997 · Streaming & Entertainment</div>
+        </div>
+    </div>
+    <video class="story-video" src="Content/Netflix.mp4" controls autoplay muted loop></video>
+    <div class="story-body">
+        <p>Netflix, today recognized as a global entertainment powerhouse, began its journey in a modest way that few could have predicted would lead to such a monumental shift in how the world consumes media. Founded in 1997 by Reed Hastings and Marc Randolph in Scotts Valley, California, Netflix started as a small online DVD rental service that challenged the traditional video rental industry dominated by companies like Blockbuster.</p>
+        <p>The idea for Netflix came to Reed Hastings after he incurred a hefty late fee for a VHS rental of Apollo 13. Hastings wondered why there wasn't a better way to rent movies — one that didn't punish customers for delays. Netflix innovated with a subscription model in 1999, allowing customers to pay a monthly fee for unlimited rentals without late fees — a stark contrast to Blockbuster's penalty-heavy approach.</p>
+        <p>By the mid-2000s, technology and internet speeds had advanced, and Netflix foresaw that streaming media online could become the future. In 2007, Netflix launched its streaming service, allowing subscribers to watch movies and TV shows instantly on their computers. This pivot was a bold move that set the stage for the digital entertainment era.</p>
+        <p>In 2013, Netflix released its first major original series, House of Cards, marking the beginning of Netflix as a content creator, not just a distributor. Over the years, Netflix produced acclaimed series like Stranger Things, The Crown, and Narcos, as well as blockbuster films including Roma and The Irishman.</p>
+        <p>Netflix aggressively expanded internationally, launching in Canada in 2010, Latin America in 2011, and Europe and Asia soon after. By 2020, Netflix was available in over 190 countries with hundreds of millions of subscribers. Today, Netflix is more than just a streaming service — it's a cultural phenomenon, a symbol of innovation, and a testament to the power of adapting to change.</p>
+    </div>
+</div>
+
+<div class="story" id="Ama">
+    <div class="story-header">
+        <div class="story-number">02</div>
+        <div class="story-title-block">
+            <h3 class="accent-orange">Amazon</h3>
+            <div class="story-type">Founded 1994 · E-Commerce & Cloud Computing</div>
+        </div>
+    </div>
+    <video class="story-video" src="Content/Amazon.mp4" controls autoplay muted loop></video>
+    <div class="story-body">
+        <p>Amazon, one of the most influential companies in the world, began as a small online bookstore and grew into a global powerhouse that reshaped retail, technology, and entertainment. The story starts in 1994 when Jeff Bezos, a former Wall Street executive, left his job to pursue the burgeoning opportunities of the internet. He founded a company initially called Cadabra, Inc., which he soon renamed Amazon — after the largest river in the world, symbolizing his ambition to build the largest store on Earth.</p>
+        <p>In July 1995, Amazon launched as an online bookstore, offering customers the convenience of browsing millions of titles with innovations such as personalized recommendations, customer reviews, and one-click ordering. Despite operating at a loss, Amazon went public in 1997, raising $54 million, and Bezos reinvested aggressively to expand the business.</p>
+        <p>In 2005, Amazon launched Prime, a subscription service that offered free two-day shipping and later included access to video streaming, creating an extremely loyal customer base. Around the same time, Bezos recognized the potential of cloud computing and in 2006 introduced Amazon Web Services (AWS) — which grew into a dominant force in cloud services.</p>
+        <p>Amazon continued to diversify, moving into entertainment with Amazon Studios and making key acquisitions such as Whole Foods in 2017, Zappos, and Twitch. Today, Amazon operates in dozens of countries, running one of the most sophisticated logistics networks in the world and remaining a major player in e-commerce, cloud computing, artificial intelligence, and media.</p>
+        <p>From a modest online bookstore to a trillion-dollar global enterprise, Amazon's story is a testament to vision, persistence, and the power of reinvention.</p>
+    </div>
+</div>
+
+<div class="story" id="Nvidia">
+    <div class="story-header">
+        <div class="story-number">03</div>
+        <div class="story-title-block">
+            <h3 class="accent-green">Nvidia</h3>
+            <div class="story-type">Founded 1993 · GPU & Artificial Intelligence</div>
+        </div>
+    </div>
+    <video class="story-video" src="Content/nVidia.mp4" controls autoplay muted loop></video>
+    <div class="story-body">
+        <p>NVIDIA's story begins in 1993, when three engineers — Jensen Huang, Chris Malachowsky, and Curtis Priem — came together with a shared belief that graphics processing would change the future of computing. They named the company NVIDIA, a combination of "invidia," the Latin word for envy, and "NV," shorthand for "next version."</p>
+        <p>In 1999, NVIDIA introduced a breakthrough product: the GeForce 256, marketed as the world's first GPU or graphics processing unit — a chip capable of handling complex 3D calculations previously done by the computer's main processor. The GPU quickly became the gold standard for gaming graphics.</p>
+        <p>Something unexpected then happened: researchers realized NVIDIA's graphics chips were incredibly good at more than just gaming. The same parallel processing power used to render 3D scenes could handle scientific simulations, mathematical modeling, and massive datasets far faster than traditional CPUs. In 2006, NVIDIA released CUDA, a programming platform that allowed developers to harness GPU power for general-purpose computing — opening the door for breakthroughs in artificial intelligence.</p>
+        <p>By the 2010s, NVIDIA had grown from a niche graphics company into a major force in AI. Its hardware became central to the rise of deep learning, supporting companies like Google, Meta, OpenAI, Tesla, and countless research institutions. NVIDIA's growth accelerated in the 2020s as the world embraced AI at an unprecedented scale, making it one of the most valuable companies in the world.</p>
+        <p>What began as a bold idea between three engineers has become a company that reshaped gaming, accelerated scientific discovery, and powered the rise of artificial intelligence.</p>
+    </div>
+</div>
+
+<div class="section-divider">
+    <div class="section-label"><h2>People Stories</h2></div>
+</div>
+
+<div class="story" id="steve">
+    <div class="story-header">
+        <div class="story-number">01</div>
+        <div class="story-title-block">
+            <h3 class="accent-grey">Steve Jobs</h3>
+            <div class="story-type">1955 – 2011 · Co-Founder of Apple Inc.</div>
+        </div>
+    </div>
+    <div class="person-card">
+        <div class="person-photo">
+            <img src="Content/Steve.jpg" alt="Steve Jobs">
+        </div>
+        <div class="person-info">
+            <div class="info-cell">
+                <div class="label">Born</div>
+                <p>February 24, 1955<br>San Francisco, California, U.S.</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Passed Away</div>
+                <p>October 5, 2011 (aged 56)<br>Palo Alto, California, U.S.</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Education</div>
+                <p>Reed College (dropped out)</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Known For</div>
+                <p>Pioneer of the personal computer revolution. Co-creator of the Apple II, Macintosh, iPod, iPhone & iPad.</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Title</div>
+                <p>Co-founder, Chairman & CEO of Apple Inc. Founder & CEO of NeXT. Chairman of Pixar.</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Awards</div>
+                <p>Presidential Medal of Freedom (posthumous, 2022)</p>
+            </div>
+        </div>
+    </div>
+    <div class="story-body">
+        <p>Steve Jobs' story is one of the most remarkable and dramatic journeys in modern business and technology — a tale of brilliance, rebellion, failure, reinvention, and ultimately, legacy. Born in 1955 in San Francisco and adopted shortly after birth, Jobs grew up in California during the early years of Silicon Valley. He was intelligent, curious, and restless, fascinated by electronics yet uninterested in the traditional path laid out by school or structure.</p>
+        <p>As a teenager, he met Steve Wozniak, an older and equally gifted engineer. In 1976, in the Jobs family garage, the two Steves founded Apple Computer. Apple's early products fueled the revolution of home computers, culminating in the Macintosh in 1984 — a computer with a graphical interface that changed computing forever.</p>
+        <p>But in 1985, after internal power struggles, Jobs was pushed out of the company he helped create. During this period away from Apple, he founded NeXT and purchased a small computer graphics division from George Lucas — that tiny division eventually became Pixar, which created Toy Story, the world's first full-length computer-animated film.</p>
+        <p>Apple acquired NeXT in 1996, bringing Jobs back home. By 1997, he became Apple's CEO again — this time more experienced and focused. What followed was one of the greatest turnarounds in business history. In 2001, Apple launched the iPod. Then came the iPhone in 2007, a device that redefined mobile technology and reshaped the entire world's relationship with phones.</p>
+        <p>Jobs left behind more than products or a company. He left a legacy of challenging the status quo, of merging technology with the humanities, and of believing that design matters as much as innovation. From a garage in California to becoming a global icon, Steve Jobs' story remains one of the defining tales of modern creativity and ambition.</p>
+    </div>
+</div>
+
+<div class="story" id="Amjad">
+    <div class="story-header">
+        <div class="story-number">02</div>
+        <div class="story-title-block">
+            <h3 class="accent-coral">Amjad Masad</h3>
+            <div class="story-type">Born 1988, Amman, Jordan · Founder & CEO of Replit</div>
+        </div>
+    </div>
+    <div class="person-card">
+        <div class="person-photo">
+            <img src="Content/Amjad1.png" alt="Amjad Masad">
+        </div>
+        <div class="person-info">
+            <div class="info-cell">
+                <div class="label">Born</div>
+                <p>1988<br>Amman, Jordan</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Status</div>
+                <p>Alive</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Education</div>
+                <p>Computer Science Graduate, Princess Sumaya University for Technology</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Known For</div>
+                <p>Founder of Replit, the world's leading browser-based coding platform.</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Title</div>
+                <p>Founder & CEO of Replit</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Awards</div>
+                <p>Honored by Princess Sumaya University for Technology</p>
+            </div>
+        </div>
+    </div>
+    <div class="story-body">
+        <p>Amjad Masad's story does not begin in a Silicon Valley startup incubator or a prestigious American university. It begins in Amman, Jordan, in a household filled with books, curiosity, and cultural diversity. Born to a Palestinian father and an Algerian mother, Masad grew up in an environment that blended different histories and perspectives. But the thing that truly captured his imagination was a computer — an old, imperfect machine that opened a window into an entirely new world.</p>
+        <p>As a young teenager, Masad discovered programming almost by accident. What fascinated him most was the sense of empowerment: with just a bit of code, he could make something exist that had not existed before. This mindset stayed with him as he pursued computer science at the Princess Sumaya University for Technology in Amman.</p>
+        <p>His career truly began to take shape when he moved to the United States. One of his earliest major roles was at Codecademy, where he joined as one of the founding engineers. Later, he joined Facebook, where he worked on JavaScript infrastructure and open-source tools. At Facebook, Masad gained a deep understanding of large-scale systems and developer experience — and saw, more clearly than ever, how much friction remained for beginners.</p>
+        <p>Replit was born from a simple question: what if coding didn't require installing anything? What if it could happen instantly, on the web, from anywhere in the world? Masad co-founded Replit in 2016 with the goal of making programming as accessible as possible. For millions of people around the world — especially those outside major tech hubs — that promise was transformative.</p>
+        <p>A kid who grew up thousands of miles from Silicon Valley, inspired by the freedom of programming, went on to build one of the world's most influential coding platforms. His journey from a second-hand computer in Jordan to leading a global developer platform reflects not just personal success, but a broader vision for a more open and creative technological future.</p>
+    </div>
+</div>
+
+<div class="story" id="kojima">
+    <div class="story-header">
+        <div class="story-number">03</div>
+        <div class="story-title-block">
+            <h3 class="accent-blue">Hideo Kojima</h3>
+            <div class="story-type">Born 1963, Tokyo, Japan · Game Designer & Director</div>
+        </div>
+    </div>
+    <div class="person-card">
+        <div class="person-photo">
+            <img src="Content/Kojima.jpg" alt="Hideo Kojima">
+        </div>
+        <div class="person-info">
+            <div class="info-cell">
+                <div class="label">Born</div>
+                <p>August 24, 1963 (age 62)<br>Tokyo, Japan</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Status</div>
+                <p>Alive</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Education</div>
+                <p>University Graduate</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Known For</div>
+                <p>Metal Gear Solid series, Death Stranding</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Title</div>
+                <p>Video game designer, writer, director & producer. Founder of Kojima Productions.</p>
+            </div>
+            <div class="info-cell">
+                <div class="label">Awards</div>
+                <p>BAFTA Fellowship Award, Hall of Fame Award, Industry Legend Award</p>
+            </div>
+        </div>
+    </div>
+    <div class="story-body">
+        <p>Hideo Kojima's story begins in Setagaya, Tokyo, but he spent most of his childhood in Kansai after his family moved. His early years were marked by solitude, curiosity, and the discovery that storytelling could be both an escape and a way of giving shape to emotions he didn't yet know how to express. Kojima grew up watching movies late at night with his family, absorbing Western films, war dramas, science fiction epics, and psychological thrillers. The language of cinema became part of the way he thought.</p>
+        <p>Kojima did not always intend to enter the world of games — he spent much of his youth dreaming of becoming a novelist or filmmaker. Everything changed when he encountered video games not as toys, but as storytelling mediums. In an era when games were still simple and mechanically driven, Kojima saw a future where games would become emotional experiences. Against the wishes of those around him, he applied to join Konami — a decision that shocked his friends, as game development was not considered prestigious at the time.</p>
+        <p>Those early days were not easy. His first projects were rejected. His ideas were considered too ambitious. Then came Metal Gear. Originally designed for the MSX2 computer, the game was born out of limitations — Kojima turned the constraint of few on-screen characters into a theme. Instead of fighting enemies head-on, players would avoid them. Action became stealth. The idea was revolutionary.</p>
+        <p>Over the next decades, Kojima built Metal Gear Solid into a global phenomenon, treating video games as films mixed with literature mixed with theater. In 2015, after a very public split from Konami, Kojima founded Kojima Productions — an independent studio built entirely around the freedom to create without compromise. His first game, Death Stranding (2019), was unlike anything else in the industry: a meditative, strange, beautiful odyssey about connection, isolation, and the fragility of humanity.</p>
+        <p>From the lonely child who stayed up late watching movies, to the young writer who doubted his talent, to the visionary who reshaped an entire creative industry — Hideo Kojima's journey is one of persistence, imagination, and a refusal to accept limitations. He never stopped believing that games could be art. Instead of waiting for the world to agree, he spent his life proving it.</p>
+    </div>
+</div>
+
+
+
+<script>
+    function toggleMode() {
+        const body = document.body;
+        const btn = document.querySelector('.dark-toggle');
+        body.classList.toggle('light');
+        btn.textContent = body.classList.contains('light') ? '☾ Dark Mode' : '☀ Light Mode';
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
