@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ — Digital Growth Path</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --surface2: #1a1e28;
+            --border: rgba(255,255,255,0.07);
+            --accent: #c8a96e;
+            --accent2: #7eb8d4;
+            --text: #e8e3d8;
+            --text-muted: #7a7e8a;
+            --cpp: #6b8ee8;
+            --cpp-bg: rgba(107,142,232,0.08);
+            --cpp-border: rgba(107,142,232,0.2);
+        }
+
+        body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+
+        /* ─── NAVBAR ─── */
+        nav.topnav { position: sticky; top: 0; z-index: 100; background: rgba(13,15,20,0.85); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--accent); text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .dark-toggle { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 16px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; transition: all 0.2s; }
+        .dark-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ─── HERO ─── */
+        .hero { position: relative; padding: 80px 48px 60px; text-align: center; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(107,142,232,0.1) 0%, transparent 70%); pointer-events: none; }
+        .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; animation: fadeUp 0.5s ease both; }
+        .breadcrumb a { text-decoration: none; color: var(--text-muted); transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb .sep { opacity: 0.4; }
+        .breadcrumb .current { color: var(--cpp); }
+        .lang-badge { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--cpp-border); background: var(--cpp-bg); color: var(--cpp); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 18px; border-radius: 20px; margin-bottom: 20px; animation: fadeUp 0.5s ease 0.05s both; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; animation: fadeUp 0.5s ease 0.1s both; }
+        .hero h1 em { font-style: italic; color: var(--cpp); }
+        .hero-sub { max-width: 560px; margin: 0 auto; color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; animation: fadeUp 0.5s ease 0.15s both; }
+
+        /* ─── LOGO STRIP ─── */
+        .logo-strip { display: flex; justify-content: center; margin: 40px 0 0; animation: fadeUp 0.5s ease 0.2s both; }
+        .logo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 40px; display: flex; align-items: center; gap: 20px; }
+        .logo-card img { width: 80px; height: 80px; object-fit: contain; }
+        .logo-card-text { text-align: left; }
+        .logo-card-text .lang-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--cpp); }
+        .logo-card-text .lang-meta { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; margin-top: 4px; }
+
+        /* ─── QUICK STATS ─── */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 860px; margin: 32px auto 0; padding: 0 48px; animation: fadeUp 0.5s ease 0.25s both; }
+        .stat-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-align: center; }
+        .stat-pill .s-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--cpp); }
+        .stat-pill .s-lbl { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+
+        /* ─── MAIN ─── */
+        .main { max-width: 900px; margin: 0 auto; padding: 60px 48px 100px; }
+
+        /* ─── SECTION LABEL ─── */
+        .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+        .section-label h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; white-space: nowrap; }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        /* ─── CONTENT CARDS ─── */
+        .content-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; animation: fadeUp 0.5s ease both; transition: border-color 0.3s, box-shadow 0.3s; }
+        .content-card:hover { border-color: var(--cpp-border); box-shadow: 0 12px 40px rgba(107,142,232,0.07); }
+        .content-card:nth-child(1) { animation-delay: 0.05s; }
+        .content-card:nth-child(2) { animation-delay: 0.12s; }
+
+        .card-header { padding: 18px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+        .card-header-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--cpp-bg); border: 1px solid var(--cpp-border); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+        .card-header-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; }
+        .card-header-sub { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cpp); margin-left: auto; }
+
+        .card-body { padding: 28px; color: var(--text-muted); line-height: 1.9; font-size: 0.92rem; text-align: justify; }
+
+        /* ─── KEY FEATURES GRID ─── */
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px; }
+        .feature-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 20px; display: flex; gap: 14px; align-items: flex-start; transition: border-color 0.2s; animation: fadeUp 0.5s ease both; }
+        .feature-item:hover { border-color: var(--cpp-border); }
+        .feature-item:nth-child(1) { animation-delay: 0.05s; }
+        .feature-item:nth-child(2) { animation-delay: 0.10s; }
+        .feature-item:nth-child(3) { animation-delay: 0.15s; }
+        .feature-item:nth-child(4) { animation-delay: 0.20s; }
+        .feature-item:nth-child(5) { animation-delay: 0.25s; }
+        .feature-item:nth-child(6) { animation-delay: 0.30s; }
+        .feature-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cpp); flex-shrink: 0; margin-top: 6px; }
+        .feature-text h4 { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .feature-text p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* ─── USE CASES ─── */
+        .usecases-list { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 40px; }
+        .usecase-item { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        .usecase-item:last-child { border-bottom: none; }
+        .usecase-item:hover { background: var(--surface2); }
+        .usecase-icon { font-size: 1.2rem; flex-shrink: 0; width: 36px; text-align: center; }
+        .usecase-text { font-size: 0.88rem; color: var(--text); }
+        .usecase-tag { margin-left: auto; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; background: var(--cpp-bg); color: var(--cpp); border: 1px solid var(--cpp-border); flex-shrink: 0; }
+
+        /* ─── RESOURCES ─── */
+        .resources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+        .resource-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; text-decoration: none; display: block; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; animation: fadeUp 0.5s ease both; }
+        .resource-card:hover { transform: translateY(-4px); border-color: rgba(200,169,110,0.3); box-shadow: 0 12px 36px rgba(200,169,110,0.08); }
+        .resource-card-inner { padding: 20px 22px; display: flex; align-items: flex-start; gap: 14px; }
+        .res-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+        .res-body .res-type { font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+        .res-body .res-title { font-size: 0.88rem; color: var(--text); font-weight: 500; line-height: 1.4; }
+        .res-body .res-src { font-size: 0.75rem; color: var(--accent); margin-top: 6px; }
+
+        /* ─── BACK BUTTON ─── */
+        .back-wrap { margin-bottom: 48px; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-muted); font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 18px; transition: all 0.2s; }
+        .btn-back:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ─── FOOTER ─── */
+        footer { border-top: 1px solid var(--border); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .footer-brand { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--accent); }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
+        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.82rem; letter-spacing: 0.05em; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ─── LIGHT MODE ─── */
+        body.light { --bg: #f7f5f0; --surface: #ffffff; --surface2: #f0ece4; --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text-muted: #6b6b6b; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            nav.topnav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 60px 20px 40px; }
+            .stats-row { grid-template-columns: 1fr 1fr; padding: 0 20px; }
+            .main { padding: 40px 20px 80px; }
+            .features-grid, .resources-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; align-items: flex-start; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="topnav">
+    <a href="../Home Page.html" class="nav-brand">Digital Growth Path</a>
+    <ul class="nav-links">
+        <li><a href="../Learning Hub.html" class="active">Learning Hub</a></li>
+        <li><a href="../Success Stories.html">Success Stories</a></li>
+        <li><a href="../Self-Assessment - Growth Tools.html">Self-Assessment</a></li>
+        <li><a href="../About Us.html">About Us</a></li>
+        <li><a href="../Workshop - Events.html">Workshops</a></li>
+        <li><a href="../Contact Us.html">Contact</a></li>
+    </ul>
+    <button class="dark-toggle" onclick="toggleMode()">☀ Light Mode</button>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="breadcrumb">
+        <a href="../Home Page.html">Home</a>
+        <span class="sep">/</span>
+        <a href="../Learning Hub.html">Learning Hub</a>
+        <span class="sep">/</span>
+        <span class="current">C++</span>
+    </div>
+    <span class="lang-badge">⚙️ Programming Language</span>
+    <h1>Learning <em>C++</em></h1>
+    <p class="hero-sub">Master one of the most powerful and widely-used programming languages — from core syntax to object-oriented principles and real-world applications.</p>
+</section>
+
+<!-- ─── LOGO STRIP ─── -->
+<div class="logo-strip">
+    <div class="logo-card">
+        <img src="../Content/C++.png" alt="C++ Logo">
+        <div class="logo-card-text">
+            <div class="lang-name">C++</div>
+            <div class="lang-meta">Object-Oriented · High Performance · Systems Programming</div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── QUICK STATS ─── -->
+<div class="stats-row">
+    <div class="stat-pill">
+        <div class="s-num">1983</div>
+        <div class="s-lbl">Year Created</div>
+    </div>
+    <div class="stat-pill">
+        <div class="s-num">#3</div>
+        <div class="s-lbl">Global Popularity</div>
+    </div>
+    <div class="stat-pill">
+        <div class="s-num">OOP</div>
+        <div class="s-lbl">Paradigm</div>
+    </div>
+    <div class="stat-pill">
+        <div class="s-num">Fast</div>
+        <div class="s-lbl">Performance</div>
+    </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+    <div class="back-wrap">
+        <a href="../Learning Hub.html" class="btn-back">← Back to Learning Hub</a>
+    </div>
+
+    <!-- WHAT IS C++ -->
+    <div class="section-label"><h2>What is C++?</h2></div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <div class="card-header-icon">📘</div>
+            <span class="card-header-title">Language Overview</span>
+            <span class="card-header-sub">Fundamentals</span>
+        </div>
+        <div class="card-body">
+            C++ is an object-oriented programming language that extends the C language with classes, objects, and advanced features like inheritance and polymorphism. It allows both high-level and low-level programming, giving developers control over memory management and system resources. C++ supports strong typing, templates, and exception handling, enabling the creation of robust and reusable code. Programs are typically compiled into machine code for high performance, making it suitable for applications requiring speed and efficiency. Its standard libraries provide tools for data structures, algorithms, and input/output operations, making C++ a foundational language in software development.
+        </div>
+    </div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <div class="card-header-icon">🌍</div>
+            <span class="card-header-title">Real-World Applications</span>
+            <span class="card-header-sub">Industry Use</span>
+        </div>
+        <div class="card-body">
+            C++ is a powerful programming language known for its performance and control over system resources. It is widely used in software development for building operating systems, game engines, and high-performance applications. C++ is popular in finance for developing trading systems and real-time simulations due to its speed and efficiency. It is also used in embedded systems, robotics, and IoT devices where hardware-level access and optimization are critical. Additionally, C++ is applied in scientific computing, graphics programming, and large-scale enterprise applications, making it a versatile choice for demanding technical fields. Continuous updates to the language standard improve safety, performance, and modern programming capabilities.
+        </div>
+    </div>
+
+    <!-- KEY FEATURES -->
+    <div class="section-label"><h2>Key Features</h2></div>
+
+    <div class="features-grid">
+        <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+                <h4>Object-Oriented Programming</h4>
+                <p>Supports classes, objects, inheritance, and polymorphism for clean, reusable code design.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+                <h4>Memory Management</h4>
+                <p>Manual control over memory with pointers and dynamic allocation — enabling fine-tuned performance.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+                <h4>Templates & Generics</h4>
+                <p>Write flexible, type-independent code that works across many data types without repetition.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+                <h4>Exception Handling</h4>
+                <p>Robust error management with try/catch blocks to build reliable and fault-tolerant programs.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+                <h4>Standard Libraries (STL)</h4>
+                <p>Rich built-in tools for containers, algorithms, iterators, and I/O operations out of the box.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+                <h4>High Performance</h4>
+                <p>Compiled directly to machine code — making C++ one of the fastest languages available today.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WHERE IT'S USED -->
+    <div class="section-label"><h2>Where C++ is Used</h2></div>
+
+    <div class="usecases-list">
+        <div class="usecase-item">
+            <span class="usecase-icon">🎮</span>
+            <span class="usecase-text">Game engines and real-time 3D graphics (Unreal Engine, Unity internals)</span>
+            <span class="usecase-tag">Gaming</span>
+        </div>
+        <div class="usecase-item">
+            <span class="usecase-icon">🖥️</span>
+            <span class="usecase-text">Operating systems and system-level software (Windows, Linux kernels)</span>
+            <span class="usecase-tag">Systems</span>
+        </div>
+        <div class="usecase-item">
+            <span class="usecase-icon">📈</span>
+            <span class="usecase-text">High-frequency trading platforms and financial simulations</span>
+            <span class="usecase-tag">Finance</span>
+        </div>
+        <div class="usecase-item">
+            <span class="usecase-icon">🤖</span>
+            <span class="usecase-text">Embedded systems, robotics, and IoT devices</span>
+            <span class="usecase-tag">Hardware</span>
+        </div>
+        <div class="usecase-item">
+            <span class="usecase-icon">🔬</span>
+            <span class="usecase-text">Scientific computing and physics simulations</span>
+            <span class="usecase-tag">Science</span>
+        </div>
+        <div class="usecase-item">
+            <span class="usecase-icon">🌐</span>
+            <span class="usecase-text">Browsers and performance-critical web infrastructure (Chrome V8 engine)</span>
+            <span class="usecase-tag">Web</span>
+        </div>
+    </div>
+
+    <!-- LEARNING RESOURCES -->
+    <div class="section-label"><h2>Learning Resources</h2></div>
+
+    <div class="resources-grid">
+        <a href="https://www.youtube.com/watch?v=ZzaPdXTrSb8" target="_blank" class="resource-card">
+            <div class="resource-card-inner">
+                <span class="res-icon">▶</span>
+                <div class="res-body">
+                    <div class="res-type">Video · Beginner</div>
+                    <div class="res-title">C++ Tutorial for Beginners — Full Course</div>
+                    <div class="res-src">YouTube · freeCodeCamp</div>
+                </div>
+            </div>
+        </a>
+        <a href="https://www.learncpp.com/" target="_blank" class="resource-card">
+            <div class="resource-card-inner">
+                <span class="res-icon">📄</span>
+                <div class="res-body">
+                    <div class="res-type">Article · Comprehensive</div>
+                    <div class="res-title">LearnCpp.com — Free C++ Tutorial</div>
+                    <div class="res-src">learncpp.com</div>
+                </div>
+            </div>
+        </a>
+        <a href="https://www.w3schools.com/cpp/" target="_blank" class="resource-card">
+            <div class="resource-card-inner">
+                <span class="res-icon">📖</span>
+                <div class="res-body">
+                    <div class="res-type">Reference · Interactive</div>
+                    <div class="res-title">C++ Reference & Examples</div>
+                    <div class="res-src">W3Schools</div>
+                </div>
+            </div>
+        </a>
+        <a href="https://cppreference.com/" target="_blank" class="resource-card">
+            <div class="resource-card-inner">
+                <span class="res-icon">📚</span>
+                <div class="res-body">
+                    <div class="res-type">Documentation · Advanced</div>
+                    <div class="res-title">C++ Standard Library Reference</div>
+                    <div class="res-src">cppreference.com</div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <span class="footer-brand">Digital Growth Path</span>
+    <div class="footer-links">
+        <a href="../Home Page.html">Home</a>
+        <a href="../About Us.html">About Us</a>
+        <a href="../Learning Hub.html">Learning Hub</a>
+        <a href="../Self-Assessment - Growth Tools.html">Self-Assessment</a>
+        <a href="../Success Stories.html">Success Stories</a>
+        <a href="../Workshop - Events.html">Workshops</a>
+        <a href="../Contact Us.html">Contact</a>
+    </div>
+</footer>
+
+<script>
+    function toggleMode() {
+        const body = document.body;
+        const btn = document.querySelector('.dark-toggle');
+        body.classList.toggle('light');
+        btn.textContent = body.classList.contains('light') ? '☾ Dark Mode' : '☀ Light Mode';
+    }
+</script>
+
+</body>
+</html>
