@@ -1,0 +1,47 @@
+    body {
+        text-align: center;
+        font-size: 18px;
+        background-color: white;
+        color: black;
+        transition: 0.3s;
+      }
+      body.dark {
+        background-color: #292727;
+        color: white;
+      }
+
+      p {
+        text-indent: 2em;
+        text-align: justify;
+      }
+
+    a { 
+        color: blue;
+        text-decoration: none;
+    }
+
+    a.links:hover {
+        text-decoration: underline;
+    }
+
+    table {
+        margin: 0px auto;
+        text-align: center;
+        }
+
+    td, th {
+        border: none;
+        }
+
+    .track {
+            width: 400px; 
+            margin: 0px auto;
+        }
+
+        .start {
+                text-align: left;
+            }
+        
+    .end {
+        text-align: end;
+    }
