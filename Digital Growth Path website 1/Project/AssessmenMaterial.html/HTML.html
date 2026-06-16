@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Quiz — Digital Growth Path</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --surface2: #1a1e28;
+            --border: rgba(255,255,255,0.07);
+            --accent: #c8a96e;
+            --text: #e8e3d8;
+            --text-muted: #7a7e8a;
+            /* HTML — orange-red */
+            --html: #e8663a;
+            --html-bg: rgba(232,102,58,0.08);
+            --html-border: rgba(232,102,58,0.22);
+            --correct: #34d399;
+            --correct-bg: rgba(52,211,153,0.08);
+            --correct-border: rgba(52,211,153,0.22);
+            --wrong: #e05d6a;
+            --wrong-bg: rgba(224,93,106,0.08);
+            --wrong-border: rgba(224,93,106,0.22);
+        }
+
+        body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+
+        /* NAVBAR */
+        nav.topnav { position: sticky; top: 0; z-index: 100; background: rgba(13,15,20,0.85); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--accent); text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .dark-toggle { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 16px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; transition: all 0.2s; }
+        .dark-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* HERO */
+        .hero { position: relative; padding: 60px 48px 40px; text-align: center; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(232,102,58,0.09) 0%, transparent 70%); pointer-events: none; }
+        .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 0.78rem; color: var(--text-muted); animation: fadeUp 0.5s ease both; }
+        .breadcrumb a { text-decoration: none; color: var(--text-muted); transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb .sep { opacity: 0.4; }
+        .breadcrumb .current { color: var(--html); }
+        .quiz-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--html-border); background: var(--html-bg); color: var(--html); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 18px; border-radius: 20px; margin-bottom: 16px; animation: fadeUp 0.5s ease 0.05s both; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 10px; animation: fadeUp 0.5s ease 0.1s both; }
+        .hero h1 em { font-style: italic; color: var(--html); }
+        .hero p { color: var(--text-muted); font-size: 0.9rem; animation: fadeUp 0.5s ease 0.15s both; }
+
+        /* META PILLS */
+        .quiz-meta { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin: 24px 48px 0; animation: fadeUp 0.5s ease 0.2s both; }
+        .meta-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 20px; text-align: center; }
+        .meta-pill .m-num { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--html); }
+        .meta-pill .m-lbl { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+
+        /* MAIN */
+        .main { max-width: 760px; margin: 0 auto; padding: 40px 48px 100px; }
+
+        .back-wrap { margin-bottom: 32px; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-muted); font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 18px; transition: all 0.2s; }
+        .btn-back:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* QUESTION CARDS */
+        .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+        .question-card:nth-child(1) { animation-delay: 0.04s; }
+        .question-card:nth-child(2) { animation-delay: 0.08s; }
+        .question-card:nth-child(3) { animation-delay: 0.12s; }
+        .question-card:nth-child(4) { animation-delay: 0.16s; }
+        .question-card:nth-child(5) { animation-delay: 0.20s; }
+
+        .q-header { padding: 18px 24px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 14px; }
+        .q-num { width: 30px; height: 30px; border-radius: 8px; background: var(--html-bg); border: 1px solid var(--html-border); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: var(--html); flex-shrink: 0; margin-top: 1px; }
+        .q-text { font-size: 0.92rem; color: var(--text); line-height: 1.6; }
+
+        .q-options { padding: 6px 0; }
+        .option-label { display: flex; align-items: center; gap: 14px; padding: 13px 24px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+        .option-label:last-child { border-bottom: none; }
+        .option-label:hover { background: var(--surface2); }
+        .option-label input[type="radio"] { display: none; }
+        .radio-custom { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--text-muted); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: border-color 0.15s, background 0.15s; }
+        .option-label:has(input:checked) .radio-custom { border-color: var(--html); background: var(--html); }
+        .option-label:has(input:checked) .radio-custom::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+        .option-text { font-size: 0.88rem; color: var(--text-muted); transition: color 0.15s; font-family: 'Courier New', monospace; }
+        .option-label:has(input:checked) .option-text { color: var(--text); }
+
+        /* SUBMIT */
+        .submit-wrap { margin-top: 28px; }
+        .btn-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--html), #c04a1e); border: none; border-radius: 12px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+        .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* RESULTS */
+        .results-panel { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 24px; }
+        .score-header { padding: 28px 28px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+        .score-circle { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--html); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 14px; background: var(--html-bg); }
+        .score-num-big { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--html); line-height: 1; }
+        .score-of { font-size: 0.7rem; color: var(--text-muted); }
+        .score-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+        .score-msg { font-size: 0.85rem; color: var(--text-muted); }
+
+        .result-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .result-item:last-child { border-bottom: none; }
+        .result-icon { width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0; margin-top: 1px; }
+        .r-correct { background: var(--correct-bg); border: 1px solid var(--correct-border); color: var(--correct); }
+        .r-wrong   { background: var(--wrong-bg);   border: 1px solid var(--wrong-border);   color: var(--wrong); }
+        .result-q { font-size: 0.82rem; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+        .result-answer { font-size: 0.78rem; color: var(--text-muted); font-family: 'Courier New', monospace; }
+        .ans-correct { color: var(--correct); font-weight: 500; }
+        .ans-wrong   { color: var(--wrong); font-weight: 500; text-decoration: line-through; margin-right: 6px; }
+
+        .retry-wrap { padding: 20px 24px; border-top: 1px solid var(--border); }
+        .btn-retry { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+        .btn-retry:hover { border-color: var(--html); color: var(--html); }
+
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .footer-brand { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--accent); }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
+        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.82rem; letter-spacing: 0.05em; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent); }
+
+        body.light { --bg: #f7f5f0; --surface: #ffffff; --surface2: #f0ece4; --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text-muted: #6b6b6b; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            nav.topnav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 50px 20px 30px; }
+            .quiz-meta { margin: 20px 20px 0; }
+            .main { padding: 32px 20px 80px; }
+            footer { flex-direction: column; align-items: flex-start; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="topnav">
+    <a href="../Home Page.html" class="nav-brand">Digital Growth Path</a>
+    <ul class="nav-links">
+        <li><a href="../Learning Hub.html">Learning Hub</a></li>
+        <li><a href="../Success Stories.html">Success Stories</a></li>
+        <li><a href="../Self-Assessment - Growth Tools.html" class="active">Self-Assessment</a></li>
+        <li><a href="../About Us.html">About Us</a></li>
+        <li><a href="../Workshop - Events.html">Workshops</a></li>
+        <li><a href="../Contact Us.html">Contact</a></li>
+    </ul>
+    <button class="dark-toggle" onclick="toggleMode()">☀ Light Mode</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="breadcrumb">
+        <a href="../Home Page.html">Home</a>
+        <span class="sep">/</span>
+        <a href="../Self-Assessment - Growth Tools.html">Self-Assessment</a>
+        <span class="sep">/</span>
+        <span class="current">HTML Quiz</span>
+    </div>
+    <span class="quiz-badge">🌐 Quiz · HTML</span>
+    <h1>Test Your <em>HTML</em> Knowledge</h1>
+    <p>Answer all 5 questions then submit to see your score and detailed feedback.</p>
+</section>
+
+<!-- META PILLS -->
+<div class="quiz-meta">
+    <div class="meta-pill"><div class="m-num">5</div><div class="m-lbl">Questions</div></div>
+    <div class="meta-pill"><div class="m-num">HTML</div><div class="m-lbl">Topic</div></div>
+    <div class="meta-pill"><div class="m-num">Basic</div><div class="m-lbl">Level</div></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <div class="back-wrap">
+        <a href="../Self-Assessment - Growth Tools.html" class="btn-back">← Back to Self-Assessment</a>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-card">
+        <div class="q-header">
+            <div class="q-num">Q1</div>
+            <div class="q-text">Which tag represents the largest heading?</div>
+        </div>
+        <div class="q-options">
+            <label class="option-label"><input type="radio" name="Q1" value="p"><div class="radio-custom"></div><span class="option-text">&lt;p&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q1" value="h6"><div class="radio-custom"></div><span class="option-text">&lt;h6&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q1" value="h1"><div class="radio-custom"></div><span class="option-text">&lt;h1&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q1" value="header"><div class="radio-custom"></div><span class="option-text">&lt;header&gt;</span></label>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card">
+        <div class="q-header">
+            <div class="q-num">Q2</div>
+            <div class="q-text">Which attribute is used to provide alternative text for an image?</div>
+        </div>
+        <div class="q-options">
+            <label class="option-label"><input type="radio" name="Q2" value="src"><div class="radio-custom"></div><span class="option-text">src</span></label>
+            <label class="option-label"><input type="radio" name="Q2" value="title"><div class="radio-custom"></div><span class="option-text">title</span></label>
+            <label class="option-label"><input type="radio" name="Q2" value="alt"><div class="radio-custom"></div><span class="option-text">alt</span></label>
+            <label class="option-label"><input type="radio" name="Q2" value="name"><div class="radio-custom"></div><span class="option-text">name</span></label>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card">
+        <div class="q-header">
+            <div class="q-num">Q3</div>
+            <div class="q-text">Which tag is used to insert a line break in HTML?</div>
+        </div>
+        <div class="q-options">
+            <label class="option-label"><input type="radio" name="Q3" value="p"><div class="radio-custom"></div><span class="option-text">&lt;p&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q3" value="br"><div class="radio-custom"></div><span class="option-text">&lt;br&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q3" value="lb"><div class="radio-custom"></div><span class="option-text">&lt;lb&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q3" value="break"><div class="radio-custom"></div><span class="option-text">&lt;break&gt;</span></label>
+        </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card">
+        <div class="q-header">
+            <div class="q-num">Q4</div>
+            <div class="q-text">What does HTML stand for?</div>
+        </div>
+        <div class="q-options">
+            <label class="option-label"><input type="radio" name="Q4" value="Hyperlinks"><div class="radio-custom"></div><span class="option-text" style="font-family:'DM Sans',sans-serif;">Hyperlinks and Text Marking Language</span></label>
+            <label class="option-label"><input type="radio" name="Q4" value="HomeTool"><div class="radio-custom"></div><span class="option-text" style="font-family:'DM Sans',sans-serif;">Home Tool Markup Language</span></label>
+            <label class="option-label"><input type="radio" name="Q4" value="HTML"><div class="radio-custom"></div><span class="option-text" style="font-family:'DM Sans',sans-serif;">HyperText Markup Language</span></label>
+            <label class="option-label"><input type="radio" name="Q4" value="HyperlinkTransfer"><div class="radio-custom"></div><span class="option-text" style="font-family:'DM Sans',sans-serif;">Hyperlink Transfer Markup Language</span></label>
+        </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card">
+        <div class="q-header">
+            <div class="q-num">Q5</div>
+            <div class="q-text">Which HTML tag is used to create a numbered list?</div>
+        </div>
+        <div class="q-options">
+            <label class="option-label"><input type="radio" name="Q5" value="ul"><div class="radio-custom"></div><span class="option-text">&lt;ul&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q5" value="list"><div class="radio-custom"></div><span class="option-text">&lt;list&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q5" value="li"><div class="radio-custom"></div><span class="option-text">&lt;li&gt;</span></label>
+            <label class="option-label"><input type="radio" name="Q5" value="ol"><div class="radio-custom"></div><span class="option-text">&lt;ol&gt;</span></label>
+        </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+        <button class="btn-submit" onclick="checkAnswers()">Submit Quiz →</button>
+    </div>
+
+    <!-- RESULTS PANEL -->
+    <div class="results-panel" id="resultsPanel">
+        <div class="score-header">
+            <div class="score-circle">
+                <div class="score-num-big" id="scoreNum">0</div>
+                <div class="score-of">/ 5</div>
+            </div>
+            <div class="score-title" id="scoreTitle"></div>
+            <div class="score-msg"   id="scoreMsg"></div>
+        </div>
+        <div id="resultsList"></div>
+        <div class="retry-wrap">
+            <button class="btn-retry" onclick="resetQuiz()">↺ Try Again</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <span class="footer-brand">Digital Growth Path</span>
+    <div class="footer-links">
+        <a href="../Home Page.html">Home</a>
+        <a href="../About Us.html">About Us</a>
+        <a href="../Learning Hub.html">Learning Hub</a>
+        <a href="../Self-Assessment - Growth Tools.html">Self-Assessment</a>
+        <a href="../Success Stories.html">Success Stories</a>
+        <a href="../Workshop - Events.html">Workshops</a>
+        <a href="../Contact Us.html">Contact</a>
+    </div>
+</footer>
+
+<script>
+    function toggleMode() {
+        const body = document.body;
+        const btn  = document.querySelector('.dark-toggle');
+        body.classList.toggle('light');
+        btn.textContent = body.classList.contains('light') ? '☾ Dark Mode' : '☀ Light Mode';
+    }
+
+    const ANSWERS = { Q1:'h1', Q2:'alt', Q3:'br', Q4:'HTML', Q5:'ol' };
+
+    const CORRECT_LABELS = {
+        Q1: '&lt;h1&gt;',
+        Q2: 'alt',
+        Q3: '&lt;br&gt;',
+        Q4: 'HyperText Markup Language',
+        Q5: '&lt;ol&gt;'
+    };
+
+    const Q_LABELS = {
+        Q1: 'Tag for the largest heading?',
+        Q2: 'Attribute for image alternative text?',
+        Q3: 'Tag for a line break?',
+        Q4: 'What does HTML stand for?',
+        Q5: 'Tag for a numbered list?'
+    };
+
+    function getSelected(name) {
+        for (let r of document.getElementsByName(name)) { if (r.checked) return r.value; }
+        return null;
+    }
+
+    function getSelectedLabel(name) {
+        for (let r of document.getElementsByName(name)) {
+            if (r.checked) return r.closest('.option-label')?.querySelector('.option-text')?.textContent || r.value;
+        }
+        return 'No answer selected';
+    }
+
+    function checkAnswers() {
+        let score = 0, html = '';
+
+        ['Q1','Q2','Q3','Q4','Q5'].forEach(q => {
+            const selected  = getSelected(q);
+            const isCorrect = selected === ANSWERS[q];
+            if (isCorrect) score++;
+
+            const ansLine = isCorrect
+                ? `<span class="ans-correct">✓ ${CORRECT_LABELS[q]}</span>`
+                : `<span class="ans-wrong">${getSelectedLabel(q)}</span> Correct: <span class="ans-correct">${CORRECT_LABELS[q]}</span>`;
+
+            html += `
+                <div class="result-item">
+                    <div class="result-icon ${isCorrect ? 'r-correct' : 'r-wrong'}">${isCorrect ? '✓' : '✗'}</div>
+                    <div>
+                        <div class="result-q">${q}: ${Q_LABELS[q]}</div>
+                        <div class="result-answer">${ansLine}</div>
+                    </div>
+                </div>`;
+        });
+
+        const titles = ['Keep Practising! 💪','Keep Practising! 💪','Good Job! 👍','Great Work! 🌟','Perfect Score! 🏆'];
+        const msgs   = ["Keep studying — you'll get there! 💪","Getting there — keep practising! 📖","Good effort! Review the wrong answers. 👍","Great job! Almost perfect. 🌟","Perfect score! Outstanding work! 🏆"];
+
+        document.getElementById('scoreNum').textContent   = score;
+        document.getElementById('scoreTitle').textContent = titles[score];
+        document.getElementById('scoreMsg').textContent   = msgs[score];
+        document.getElementById('resultsList').innerHTML  = html;
+
+        const panel = document.getElementById('resultsPanel');
+        panel.style.display = 'block';
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetQuiz() {
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        document.getElementById('resultsPanel').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
